@@ -1,11 +1,11 @@
 import pygame
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, x, y, velocity_x, velocity_y):
+    def __init__(self, x, y, velocity_x, velocity_y, shoot_rgb):
         super().__init__()
 
         self.image = pygame.Surface((5, 5))
-        self.image.fill((0, 0, 255))  
+        self.image.fill(shoot_rgb)  
 
         self.rect = self.image.get_rect()
         self.rect.midbottom = (x, y)  

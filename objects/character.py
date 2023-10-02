@@ -4,7 +4,7 @@ import math
 from objects.bullet import Bullet
 
 class Character(pygame.sprite.Sprite):
-    def __init__(self, image, speed, shoot_cooldown):
+    def __init__(self, image, speed):
         super().__init__()
 
         self.image = image
@@ -13,26 +13,10 @@ class Character(pygame.sprite.Sprite):
         self.rect.center = (settings.WIDTH // 2, settings.HEIGHT // 2)
 
         self.speed          = speed
-        self.shoot_cooldown = shoot_cooldown
         self.bullets        = pygame.sprite.Group()
         self.lives          = 1
-
-    def update(self):
-        if self.shoot_cooldown >= 0:
-            self.shoot_cooldown -= 1
-
-    def shoot(self):
-        if self.shoot_cooldown < 0:
-            mouse_x, mouse_y = pygame.mouse.get_pos()
-            angle = math.atan2(mouse_y - self.rect.centery, mouse_x - self.rect.centerx)
-
-            velocity_x = math.cos(angle) * settings.BULLET_SPEED
-            velocity_y = math.sin(angle) * settings.BULLET_SPEED
-
-            bullet = Bullet(self.rect.centerx, self.rect.centery, velocity_x, velocity_y)
-            self.bullets.add(bullet)
-
-            self.shoot_cooldown = settings.SHOOT_COOLDOWN
+        self.velocity_x     = 0
+        self.velocity_y     = 0
 
     def getBulletsSprite(self):
         return self.bullets
